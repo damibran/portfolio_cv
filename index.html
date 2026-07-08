@@ -41,8 +41,9 @@
         </div>
     </nav>
     <!-- Masthead-->
-    <header class="masthead bg-primary text-white text-center">
-        <div class="container d-flex align-items-center flex-column">
+    <header class="masthead bg-primary text-white text-center position-relative">
+        <div id="shader-bg" class="position-absolute top-0 bottom-0 start-0 end-0 z-0"></div>
+        <div class="container d-flex align-items-center flex-column position-relative z-1">
             <!-- Masthead Avatar Image-->
             <img class="masthead-avatar mb-5 rounded-circle" src="assets/img/portfolio/face.png" alt="..." />
             <!-- Masthead Heading-->
@@ -251,19 +252,30 @@
                                     подготовил <a href="https://habr.com/ru/articles/836234/">статью на Хабр</a> о
                                     процессе разработки.
                                 </p>
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-auto mb-2">
+                                        <a class="btn btn-xl btn-primary" href="https://store.steampowered.com/app/4781740/Funky_Pirates/">
+                                            <i class="fa-brands fa-steam"></i>
+                                            Steam
+                                            <i class="fa-brands fa-steam"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-auto mb-2">
+                                        <a class="btn btn-xl btn-primary" href="https://vkplay.ru/play/game/funky_pirates/">
+                                            <i class="fa-solid fa-link"></i>
+                                            VK Play
+                                            <i class="fa-solid fa-link"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-auto mb-2">
+                                        <a class="btn btn-xl btn-primary" href="https://funky-games.itch.io/funky-pirates">
+                                            <i class="fa-solid fa-link"></i>
+                                            Itch.io
+                                            <i class="fa-solid fa-link"></i>
+                                        </a>
+                                    </div>
+                                </div>
                                 <br>
-                                <a class="btn btn-xl btn-primary" href="https://vkplay.ru/play/game/funky_pirates/">
-                                    <i class="fa-solid fa-link"></i>
-                                    VK Play
-                                    <i class="fa-solid fa-link"></i>
-                                </a>
-                                <br><br>
-                                <a class="btn btn-xl btn-primary" href="https://funky-games.itch.io/funky-pirates">
-                                    <i class="fa-solid fa-link"></i>
-                                    Itch.io
-                                    <i class="fa-solid fa-link"></i>
-                                </a>
-                                <br><br>
                                 <button class="btn btn-primary" data-bs-dismiss="modal">
                                     <i class="fas fa-xmark fa-fw"></i>
                                     Close Window
@@ -732,6 +744,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="js/hero-shader.js"></script>
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <!-- * *                               SB Forms JS                               * *-->
     <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
