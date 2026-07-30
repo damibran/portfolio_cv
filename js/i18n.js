@@ -1,0 +1,240 @@
+(function () {
+    const translations = {
+        ru: {
+            "meta.title": "Евдокимов Олег Home",
+            "nav.brand": "Евдокимов Олег",
+            "nav.menu": "Меню",
+            "nav.about": "Резюме",
+            "nav.portfolio": "Портфолио",
+            "hero.heading": "Евдокимов Олег",
+            "about.heading": "Резюме",
+            "about.p1": "Добро пожаловать на мой сайт портфолио. Здесь я собрал некоторые проекты, которые хочу вам показать",
+            "about.p2": "Ниже вы можете найти ссылку на Резюме",
+            "about.button": "Резюме",
+            "games.heading": "Игровые проекты",
+            "graphics.heading": "Графика и движки",
+            "modal.close": "Закрыть",
+            "nat.p1": "Это игра, которую я разрабатывал в первом семестре магистратуры Школы Разработки Видеоигр ИТМО. Проект создан на <strong>Unreal Engine 5.2</strong>, и на тот момент я использовал исключительно <strong>Blueprints</strong>.",
+            "nat.p2": "В процессе разработки освоил различные системы движка, включая:",
+            "nat.li5": "Систему локализации",
+            "nat.p3": "Кроме того, написал два музыкальных трека для игры.",
+            "fp.p1": "Этот проект — многопользовательская онлайн-пати-игра с забавной физикой, которую мы разрабатывали во втором семестре магистратуры. Наша команда состояла из четырех человек, и мы преимущественно использовали Blueprints, но в некоторых случаях прибегали к C++, когда без него было не обойтись.",
+            "fp.p2": "В проекте я работал над механикой передвижения персонажей, взаимодействием с предметами, кулачным боем, а также над UI главного меню, лобби и экрана конца игры. Также отвечал за логику управления сессией, спавн персонажей и распределение наград. Помимо этого, помогал команде с репликацией их механик в сетевой игре.",
+            "fp.p3": "В проекте я реализовал искусственный интеллект, основанный на стохастическом дереве поведения. Изначально мы использовали Steam Sessions для соединения игроков, но позже, по просьбе команды VK, перешли на выделенные серверы (сначала Selectel, затем Timeweb). Взаимодействие с серверами осуществлялось через <a href=\"https://github.com/if0ne/orkestra\">менеджер серверов</a>, разработанный моим сокомандником, с передачей данных через VaRest.",
+            "fp.p4": "Помимо программирования, я написал музыку для главного меню, смонтировал трейлер и подготовил <a href=\"https://habr.com/ru/articles/836234/\">статью на Хабр</a> о процессе разработки.",
+            "is.p1": "Эта игра была разработана в третьем семестре обучения в ИТМО в рамках учебного проекта. Разработка велась на движке <strong>Unity</strong>, с использованием двух ассетов от разных разработчиков, которые я успешно объединил.",
+            "is.p2": "Одним из условий проекта было минимальное самостоятельное написание кода, с чем я почти справился. 😄 В процессе работы попробовал реализовать онлайн-режим через <strong>Fusion</strong>, но столкнулся с проблемами, поэтому переключился на <strong>Mirror</strong> и успешно добавил сетевой функционал, несмотря на то, что ассеты не были рассчитаны на онлайн-игру.",
+            "is.p3": "Дополнительно интегрировал <strong>Google Analytics</strong> для сбора статистики и настроил <strong>CI/CD</strong> в GitHub с помощью <em>game-ci</em> и локального runner'а (из-за нехватки квоты как на GitHub, так и на GitLab).",
+            "is.p4": "В завершение я успешно опубликовал игру в <strong>Google Play Store</strong>. 🎉",
+            "va.p1": "Это моя выпускная бакалаврская работа, выполненная на <strong>C++</strong> с использованием <strong>Vulkan-Hpp</strong>. Проект включает следующие компоненты:",
+            "va.li1": "Импорт моделей с поддержкой скелетов и анимаций",
+            "va.li2": "Возможность создания сложных анимаций с помощью анимационного секвенсора",
+            "va.li3": "Unlit текстурированный шейдер",
+            "va.li4": "Базовый unlit шейдер с контуром",
+            "va.li5": "Поддержка гизмов для удобного редактирования сцены",
+            "va.li6": "Система вьюпортов",
+            "va.p2": "В проекте использованы библиотеки: <strong>Entt</strong>, <strong>Assimp</strong>, <strong>ImGui</strong>, <strong>ImGuizmo</strong>.",
+            "gg.title": "Движок для рендеринга и игрового процесса",
+            "gg.desc": "Разработан в рамках учебного проекта на третьем семестре в ИТМО. Над проектом работала команда из 4 человек.",
+            "gg.contrib": "Мой вклад в проект:",
+            "gg.li1": "Разработка базовой системы рендеринга, включая:",
+            "gg.li1a": "Context, Device, буферы, View&lt;T&gt;, DescHeap, Upload, life time managment",
+            "gg.li1b": "Реализация первоначального Deferred Renderer, Point Light",
+            "gg.li2": "Создание системы видимости на CPU (Cpu Visibility System) и Frustum Culling с использованием библиотеки Octree.",
+            "gg.li3": "Разработка игрового фреймворка (Gameplay Framework), включая:",
+            "gg.li3a": "Реализацию системы игровых объектов (GO) и компонентного workflow",
+            "gg.li4": "Реализация системы сохранения и загрузки сцен",
+            "gg.li5": "Создание системы префабов (реализовано на 5 из 10)",
+            "gg.li6": "Интеграция поддержки Python-скриптов с использованием библиотеки pybind11",
+            "sw.p1": "<strong>Контекст:</strong> Проект был разработан в рамках курса по компьютерной графике на 6-м семестре бакалавриата.",
+            "sw.p2": "<strong>Описание:</strong> Написал программный рендерер на чистом C++ без использования графических библиотек. В качестве инструмента для создания интерфейса и виджетов использовал Qt (хотя в ретроспективе лучше было бы выбрать SDL и ImGui).",
+            "sw.p3": "<strong>Реализованные функции:</strong>",
+            "sw.li1": "рендеринг с использованием шейдеров",
+            "sw.li2": "программируемые вершинные и фрагментные шейдеры на основе виртуальных функций C++.",
+            "sw.li3": "интерполяция вершинных атрибутов с учетом перспективы.",
+            "sw.li4": "отсечение невидимых граней",
+            "sw.li5": "отсечение по ближней плоскости в однородных координатах.",
+            "sw.li6": "тест глубины для корректного отображения объектов",
+            "sw.li7": "модель освещения Блинна-Фонга",
+            "sw.li8": "наложение текстур",
+            "sw.li9": "алгоритм Сазерленда-Ходжмана для отсечения полигонов",
+            "sw.li10": "визуализация пространственных кривых Безье",
+            "sw.li11": "рендеринг гладких поверхностей Безье",
+            "sw.p4": "<strong>Итог:</strong> Проект позволил глубже понять принципы работы графических конвейеров и рендеринга, а также улучшить навыки работы с C++ и математикой для компьютерной графики.",
+            "ase.p1": "<strong>Магистерская диссертация:</strong> Исследование и разработка методов ускорения обучения контроллера низкого уровня для алгоритма <em>Adversarial Skill Embeddings</em> с использованием подходов <em>офлайн обучения с подкреплением</em>.",
+            "ase.p2": "В рамках работы исследуются возможности оптимизации процесса обучения, что позволяет повысить эффективность и снизить вычислительные затраты при обучении агентов в сложных средах.",
+            "footer.location": "Место нахождения",
+            "footer.city": "Санкт-Петербург",
+            "footer.social": "Где меня найти",
+            "cv.meta.title": "Евдокимов Олег Резюме",
+            "cv.nav.about": "Обо мне",
+            "cv.nav.experience": "Опыт",
+            "cv.nav.education": "Образование",
+            "cv.nav.skills": "Навыки",
+            "cv.nav.interests": "Интересы",
+            "cv.name.1": "Евдокимов",
+            "cv.name.2": "Олег",
+            "cv.about.contact": "Санкт-Петербург. (921)-862-59-10 <a href=\"mailto:olegevkd@gmail.com\">olegevkd@gmail.com</a>",
+            "cv.about.p1": "Закончил магистратуру «Школа разработки видеоигр» ИТМО. За время учёбы делал проекты от прототипа до релиза: одиночную <strong>Not A Title</strong> на <strong>UE5</strong>, многопользовательскую <strong><a href=\"https://store.steampowered.com/app/4781740/Funky_Pirates/\">Funky Pirates</a></strong> (готовится к выходу в Steam), <strong>Idle Shooter</strong> на <strong>Unity</strong> и собственный движок <strong>GiiGa Engine</strong>. Бакалавриат закончил в ЛЭТИ с отличием по вычислительной технике.",
+            "cv.about.p2": "Сейчас работаю в <strong>Леста Games</strong>, команда Tech&Tools, проект «Мир Танков» — <strong>программист игровой компьютерной графики</strong>. Пишу шейдеры и эффекты для художников, работаю с <strong>DirectX 11</strong> и проприетарным FX-фреймворком студии. Параллельно преподаю программирование в Unity для детей.",
+            "cv.about.p3": "Помимо работы, развиваю собственные проекты: Funky Pirates скоро выходит в Steam, также делаю и выпускаю игры на <strong>Яндекс.Игры</strong>.",
+            "cv.about.p4": "В работе использую <strong>Unreal Engine</strong>, <strong>Unity</strong>, <strong>C++</strong>, <strong>Blueprints</strong>, сетевые технологии (<strong>Steam Sessions, выделенные серверы</strong>), <strong>Direct3D 12</strong>, <strong>Vulkan</strong>, а также интеграцию <strong>аналитики</strong> и <strong>CI/CD</strong>. Пишу технические статьи, делаю трейлеры и музыку для игр.",
+            "cv.about.p5": "Основной интерес — <strong>компьютерная графика</strong>, рендеринг и разработка движков. Есть базовый опыт с ML/Python и физикой персонажей из магистерской диссертации, но сейчас сфокусирован на графике и инструментах.",
+            "cv.exp.heading": "Опыт Работы",
+            "cv.exp.job1.title": "Программист игровой компьютерной графики",
+            "cv.exp.job1.company": "Леста Games (проект «Мир Танков»)",
+            "cv.exp.job1.desc": "Работаю в команде Tech&Tools. Пишу шейдеры и эффекты для художников, использую DirectX 11 и проприетарный FX-фреймворк студии. Участвую в задачах по атмосферным эффектам и рендерингу.",
+            "cv.exp.job1.date": "2025 — настоящее время",
+            "cv.exp.job2.title": "Преподаватель Unity",
+            "cv.exp.job2.company": "Школа программирования для детей",
+            "cv.exp.job2.desc": "Веду курс программирования игр на Unity: помогаю детям разбираться в C#, движке и основах разработки.",
+            "cv.exp.job2.date": "2025 — настоящее время",
+            "cv.edu.heading": "Образование",
+            "cv.edu.1.school": "Университет ИТМО",
+            "cv.edu.1.degree": "Магистратура \"Школа разработки видеоигр\"",
+            "cv.edu.2.school": "Санкт-Петербургский государственный электротехнический университет \"ЛЭТИ\" им. В.И. Ульянова (Ленина)",
+            "cv.edu.2.degree": "Бакалавр \"Вычислительная техника\"",
+            "cv.skills.heading": "Навыки",
+            "cv.skills.sub": "Языки программирования и инструменты",
+            "cv.interests.heading": "Интересы",
+            "cv.interests.p": "Я люблю писать музыку. Играю на электро и бас гитаре. Кручу йо-йо."
+        },
+        en: {
+            "meta.title": "Oleg Evdokimov Home",
+            "nav.brand": "Oleg Evdokimov",
+            "nav.menu": "Menu",
+            "nav.about": "Resume",
+            "nav.portfolio": "Portfolio",
+            "hero.heading": "Oleg Evdokimov",
+            "about.heading": "Resume",
+            "about.p1": "Welcome to my portfolio website. Here I've gathered some projects I'd like to show you",
+            "about.p2": "Below you can find a link to my resume",
+            "about.button": "Resume",
+            "games.heading": "Game Projects",
+            "graphics.heading": "Graphics & Engines",
+            "modal.close": "Close Window",
+            "nat.p1": "This is a game I developed during the first semester of my master's program at ITMO's School of Game Development. The project was built on <strong>Unreal Engine 5.2</strong>, and at the time I used exclusively <strong>Blueprints</strong>.",
+            "nat.p2": "During development I learned various engine systems, including:",
+            "nat.li5": "Localization system",
+            "nat.p3": "I also wrote two music tracks for the game.",
+            "fp.p1": "This project is a multiplayer online party game with goofy physics that we developed during the second semester of the master's program. Our team consisted of four people, and we mostly used Blueprints, but in some cases resorted to C++ when it was unavoidable.",
+            "fp.p2": "In this project I worked on character movement mechanics, item interaction, fist fighting, as well as the UI of the main menu, lobby, and end-game screen. I was also responsible for session management logic, character spawning, and reward distribution. On top of that, I helped the team with replicating their mechanics in the networked game.",
+            "fp.p3": "I implemented an AI based on a stochastic behavior tree. Initially we used Steam Sessions to connect players, but later, at the request of the VK team, we switched to dedicated servers (first Selectel, then Timeweb). Server interaction was handled through a <a href=\"https://github.com/if0ne/orkestra\">server manager</a> developed by my teammate, with data transfer via VaRest.",
+            "fp.p4": "Besides programming, I wrote the main menu music, edited the trailer, and prepared a <a href=\"https://habr.com/ru/articles/836234/\">Habr article</a> about the development process.",
+            "is.p1": "This game was developed during the third semester at ITMO as a study project. It was built on the <strong>Unity</strong> engine, using two assets from different developers that I successfully combined.",
+            "is.p2": "One of the project requirements was minimal hand-written code, which I almost managed. 😄 During work I tried implementing an online mode via <strong>Fusion</strong>, but ran into issues, so I switched to <strong>Mirror</strong> and successfully added networking, even though the assets were not designed for online play.",
+            "is.p3": "Additionally, I integrated <strong>Google Analytics</strong> for statistics collection and set up <strong>CI/CD</strong> on GitHub using <em>game-ci</em> and a local runner (due to quota limits on both GitHub and GitLab).",
+            "is.p4": "Finally, I successfully published the game on <strong>Google Play Store</strong>. 🎉",
+            "va.p1": "This is my bachelor's graduation thesis, written in <strong>C++</strong> using <strong>Vulkan-Hpp</strong>. The project includes the following components:",
+            "va.li1": "Model import with skeleton and animation support",
+            "va.li2": "Ability to create complex animations with an animation sequencer",
+            "va.li3": "Unlit textured shader",
+            "va.li4": "Basic unlit shader with outline",
+            "va.li5": "Gizmo support for convenient scene editing",
+            "va.li6": "Viewport system",
+            "va.p2": "Libraries used: <strong>Entt</strong>, <strong>Assimp</strong>, <strong>ImGui</strong>, <strong>ImGuizmo</strong>.",
+            "gg.title": "Rendering and gameplay engine",
+            "gg.desc": "Developed as a study project during the third semester at ITMO by a team of 4 people.",
+            "gg.contrib": "My contribution:",
+            "gg.li1": "Development of the base rendering system, including:",
+            "gg.li1a": "Context, Device, buffers, View&lt;T&gt;, DescHeap, Upload, lifetime management",
+            "gg.li1b": "Implementation of the initial Deferred Renderer, Point Light",
+            "gg.li2": "Creation of a CPU visibility system (Cpu Visibility System) and Frustum Culling using the Octree library.",
+            "gg.li3": "Development of the gameplay framework, including:",
+            "gg.li3a": "Implementation of the game object (GO) system and component-based workflow",
+            "gg.li4": "Implementation of the scene save/load system",
+            "gg.li5": "Creation of a prefab system (5 out of 10 implemented)",
+            "gg.li6": "Integration of Python scripting support using the pybind11 library",
+            "sw.p1": "<strong>Context:</strong> The project was developed as part of a computer graphics course in the 6th semester of the bachelor's program.",
+            "sw.p2": "<strong>Description:</strong> I wrote a software renderer in pure C++ without any graphics libraries. For the interface and widgets I used Qt (though in retrospect SDL and ImGui would have been a better choice).",
+            "sw.p3": "<strong>Implemented features:</strong>",
+            "sw.li1": "shader-based rendering",
+            "sw.li2": "programmable vertex and fragment shaders based on C++ virtual functions",
+            "sw.li3": "perspective-correct interpolation of vertex attributes",
+            "sw.li4": "back-face culling",
+            "sw.li5": "near-plane clipping in homogeneous coordinates",
+            "sw.li6": "depth testing for correct object rendering",
+            "sw.li7": "Blinn-Phong lighting model",
+            "sw.li8": "texture mapping",
+            "sw.li9": "Sutherland-Hodgman polygon clipping algorithm",
+            "sw.li10": "visualization of spatial Bezier curves",
+            "sw.li11": "rendering of smooth Bezier surfaces",
+            "sw.p4": "<strong>Result:</strong> The project gave me a deeper understanding of graphics pipelines and rendering, and improved my C++ and math-for-graphics skills.",
+            "ase.p1": "<strong>Master's thesis:</strong> Research and development of methods to accelerate low-level controller training for the <em>Adversarial Skill Embeddings</em> algorithm using <em>offline reinforcement learning</em> approaches.",
+            "ase.p2": "The work explores ways to optimize the training process, improving efficiency and reducing computational costs when training agents in complex environments.",
+            "footer.location": "Location",
+            "footer.city": "Saint Petersburg",
+            "footer.social": "Find me online",
+            "cv.meta.title": "Oleg Evdokimov Resume",
+            "cv.nav.about": "About",
+            "cv.nav.experience": "Experience",
+            "cv.nav.education": "Education",
+            "cv.nav.skills": "Skills",
+            "cv.nav.interests": "Interests",
+            "cv.name.1": "Oleg",
+            "cv.name.2": "Evdokimov",
+            "cv.about.contact": "Saint Petersburg. +7 (921)-862-59-10 <a href=\"mailto:olegevkd@gmail.com\">olegevkd@gmail.com</a>",
+            "cv.about.p1": "Graduated from the master's program at ITMO's School of Game Development. During my studies I built projects from prototype to release: the solo game <strong>Not A Title</strong> on <strong>UE5</strong>, the multiplayer <strong><a href=\"https://store.steampowered.com/app/4781740/Funky_Pirates/\">Funky Pirates</a></strong> (coming soon to Steam), <strong>Idle Shooter</strong> on <strong>Unity</strong>, and my own <strong>GiiGa Engine</strong>. I graduated with honors from ETU \"LETI\" with a bachelor's degree in computer engineering.",
+            "cv.about.p2": "I currently work at <strong>Lesta Games</strong>, Tech&Tools team, on the \"Mir Tankov\" project — as a <strong>game graphics programmer</strong>. I write shaders and effects for artists, working with <strong>DirectX 11</strong> and the studio's proprietary FX framework. In parallel, I teach Unity programming to kids.",
+            "cv.about.p3": "Outside of work, I develop my own projects: Funky Pirates is coming to Steam soon, and I also make and release games on <strong>Yandex Games</strong>.",
+            "cv.about.p4": "In my work I use <strong>Unreal Engine</strong>, <strong>Unity</strong>, <strong>C++</strong>, <strong>Blueprints</strong>, networking technologies (<strong>Steam Sessions, dedicated servers</strong>), <strong>Direct3D 12</strong>, <strong>Vulkan</strong>, as well as <strong>analytics</strong> integration and <strong>CI/CD</strong>. I write technical articles, and make trailers and music for games.",
+            "cv.about.p5": "My main interest is <strong>computer graphics</strong>, rendering, and engine development. I have basic experience with ML/Python and character physics from my master's thesis, but I'm currently focused on graphics and tools.",
+            "cv.exp.heading": "Work Experience",
+            "cv.exp.job1.title": "Game Graphics Programmer",
+            "cv.exp.job1.company": "Lesta Games (\"Mir Tankov\" project)",
+            "cv.exp.job1.desc": "I work in the Tech&Tools team. I write shaders and effects for artists, using DirectX 11 and the studio's proprietary FX framework. I participate in atmospheric effects and rendering tasks.",
+            "cv.exp.job1.date": "2025 — Present",
+            "cv.exp.job2.title": "Unity Instructor",
+            "cv.exp.job2.company": "Programming school for kids",
+            "cv.exp.job2.desc": "I teach a game programming course in Unity: helping kids learn C#, the engine, and development basics.",
+            "cv.exp.job2.date": "2025 — Present",
+            "cv.edu.heading": "Education",
+            "cv.edu.1.school": "ITMO University",
+            "cv.edu.1.degree": "Master's degree — School of Game Development",
+            "cv.edu.2.school": "Saint Petersburg Electrotechnical University \"LETI\" named after V.I. Ulyanov (Lenin)",
+            "cv.edu.2.degree": "Bachelor's degree in Computer Engineering",
+            "cv.skills.heading": "Skills",
+            "cv.skills.sub": "Programming Languages & Tools",
+            "cv.interests.heading": "Interests",
+            "cv.interests.p": "I love writing music. I play electric and bass guitar. I do yo-yo tricks."
+        }
+    };
+
+    function getLang() {
+        const saved = localStorage.getItem("lang");
+        if (saved === "ru" || saved === "en") return saved;
+        return (navigator.language || "").toLowerCase().startsWith("ru") ? "ru" : "en";
+    }
+
+    function applyLang(lang) {
+        const dict = translations[lang] || translations.ru;
+        document.documentElement.lang = lang;
+        const pageKey = document.body && document.body.getAttribute("data-page") === "cv" ? "cv.meta.title" : "meta.title";
+        if (dict[pageKey]) document.title = dict[pageKey];
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+            const key = el.getAttribute("data-i18n");
+            if (dict[key] !== undefined) el.innerHTML = dict[key];
+        });
+        document.querySelectorAll("[data-lang-toggle]").forEach(function (el) {
+            el.textContent = lang === "ru" ? "EN" : "RU";
+            el.setAttribute("aria-label", lang === "ru" ? "Switch to English" : "Переключить на русский");
+        });
+        localStorage.setItem("lang", lang);
+    }
+
+    function init() {
+        applyLang(getLang());
+        document.querySelectorAll("[data-lang-toggle]").forEach(function (el) {
+            el.addEventListener("click", function (e) {
+                e.preventDefault();
+                applyLang(localStorage.getItem("lang") === "ru" ? "en" : "ru");
+            });
+        });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
+    }
+})();

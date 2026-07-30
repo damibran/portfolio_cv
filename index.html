@@ -23,19 +23,21 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="#page-top">Евдокимов Олег</a>
+            <a class="navbar-brand" href="#page-top" data-i18n="nav.brand">Евдокимов Олег</a>
             <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
-                Menu
+                <span data-i18n="nav.menu">Menu</span>
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                            href="#about">Резюме</a></li>
+                            href="#about" data-i18n="nav.about">Резюме</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                            href="#portfolio">Портфолио</a></li>
+                            href="#portfolio" data-i18n="nav.portfolio">Портфолио</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#"
+                            data-lang-toggle>EN</a></li>
                 </ul>
             </div>
         </div>
@@ -47,7 +49,7 @@
             <!-- Masthead Avatar Image-->
             <img class="masthead-avatar mb-5 rounded-circle" src="assets/img/portfolio/face.png" alt="..." />
             <!-- Masthead Heading-->
-            <h1 class="masthead-heading text-uppercase mb-0">Евдокимов Олег</h1>
+            <h1 class="masthead-heading text-uppercase mb-0" data-i18n="hero.heading">Евдокимов Олег</h1>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
@@ -64,7 +66,7 @@
     <section class="page-section bg-secondary text-white mb-0" id="about">
         <div class="container">
             <!-- About Section Heading-->
-            <h4 class="page-section-heading text-center text-uppercase text-white">Резюме</h4>
+            <h4 class="page-section-heading text-center text-uppercase text-white" data-i18n="about.heading">Резюме</h4>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
@@ -74,18 +76,18 @@
             <!-- About Section Content-->
             <div class="row">
                 <div class="col-lg-4 ms-auto">
-                    <p class="lead">Добро пожаловать на мой сайт портфолио. Здесь я собрал некоторые проекты, которые
+                    <p class="lead" data-i18n="about.p1">Добро пожаловать на мой сайт портфолио. Здесь я собрал некоторые проекты, которые
                         хочу вам показать</p>
                 </div>
                 <div class="col-lg-4 me-auto">
-                    <p class="lead">Ниже вы можете найти ссылку на Резюме</p>
+                    <p class="lead" data-i18n="about.p2">Ниже вы можете найти ссылку на Резюме</p>
                 </div>
             </div>
             <!-- About Section Button-->
             <div class="text-center mt-4">
                 <a class="btn btn-xl btn-outline-light" href="./cv/cv.html">
                     <i class="fa fa-address-card"></i>
-                    Резюме
+                    <span data-i18n="about.button">Резюме</span>
                 </a>
             </div>
         </div>
@@ -94,7 +96,7 @@
     <section class="page-section portfolio" id="portfolio">
         <div class="container">
             <!-- Portfolio Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Игровые проекты</h2>
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0" data-i18n="games.heading">Игровые проекты</h2>
             <!-- Icon Divider-->
             <div class="divider-custom">
                 <div class="divider-custom-line"></div>
@@ -170,21 +172,21 @@
                                     src="https://www.youtube.com/embed/s8xT9BtM7X0?si=3YPYiPBJYJ-0ASYM">
                                 </iframe>
                                 <!-- Portfolio Modal - Text-->
-                                <p>Это игра, которую я разрабатывал в первом семестре магистратуры
+                                <p data-i18n="nat.p1">Это игра, которую я разрабатывал в первом семестре магистратуры
                                     Школы Разработки Видеоигр ИТМО. Проект создан на <strong>Unreal Engine 5.2</strong>,
                                     и на тот момент я использовал исключительно <strong>Blueprints</strong>.</p>
 
-                                <p>В процессе разработки освоил различные системы движка, включая:</p>
+                                <p data-i18n="nat.p2">В процессе разработки освоил различные системы движка, включая:</p>
                                 <ul class="list-group">
                                     <li class="list-group-item">Niagara</li>
                                     <li class="list-group-item">Common UI</li>
                                     <li class="list-group-item">Level Streaming</li>
                                     <li class="list-group-item">Level Sequence</li>
                                     <li class="list-group-item">Behavior Tree</li>
-                                    <li class="list-group-item">Систему локализации</li>
+                                    <li class="list-group-item" data-i18n="nat.li5">Систему локализации</li>
                                 </ul>
 
-                                <p>Кроме того, написал два музыкальных трека для игры.</p>
+                                <p data-i18n="nat.p3">Кроме того, написал два музыкальных трека для игры.</p>
                                 <br>
                                 <a class="btn btn-xl btn-primary" href="https://damibran.itch.io/not-a-title">
                                     <i class="fa-solid fa-link"></i>
@@ -194,7 +196,7 @@
                                 <br><br>
                                 <button class="btn btn-primary" data-bs-dismiss="modal">
                                     <i class="fas fa-xmark fa-fw"></i>
-                                    Close Window
+                                    <span data-i18n="modal.close">Close Window</span>
                                 </button>
                             </div>
                         </div>
@@ -227,19 +229,19 @@
                                     src="https://www.youtube.com/embed/pGyqev_vuEg?si=8JNvIrjKm00b1OXG">
                                 </iframe>
                                 <!-- Portfolio Modal - Text-->
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="fp.p1">
                                     Этот проект — многопользовательская онлайн-пати-игра с забавной физикой, которую мы
                                     разрабатывали во втором семестре магистратуры. Наша команда состояла из четырех
                                     человек, и мы преимущественно использовали Blueprints, но в некоторых случаях
                                     прибегали к C++, когда без него было не обойтись.
                                 </p>
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="fp.p2">
                                     В проекте я работал над механикой передвижения персонажей, взаимодействием с
                                     предметами, кулачным боем, а также над UI главного меню, лобби и экрана конца игры.
                                     Также отвечал за логику управления сессией, спавн персонажей и распределение наград.
                                     Помимо этого, помогал команде с репликацией их механик в сетевой игре.
                                 </p>
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="fp.p3">
                                     В проекте я реализовал искусственный интеллект, основанный на стохастическом дереве
                                     поведения. Изначально мы использовали Steam Sessions для соединения игроков, но
                                     позже, по просьбе команды VK, перешли на выделенные серверы (сначала Selectel, затем
@@ -247,7 +249,7 @@
                                         href="https://github.com/if0ne/orkestra">менеджер серверов</a>, разработанный
                                     моим сокомандником, с передачей данных через VaRest.
                                 </p>
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="fp.p4">
                                     Помимо программирования, я написал музыку для главного меню, смонтировал трейлер и
                                     подготовил <a href="https://habr.com/ru/articles/836234/">статью на Хабр</a> о
                                     процессе разработки.
@@ -278,7 +280,7 @@
                                 <br>
                                 <button class="btn btn-primary" data-bs-dismiss="modal">
                                     <i class="fas fa-xmark fa-fw"></i>
-                                    Close Window
+                                    <span data-i18n="modal.close">Close Window</span>
                                 </button>
                             </div>
                         </div>
@@ -310,14 +312,14 @@
                                 <img class="img-fluid rounded mb-5 w-50" src="assets/img/portfolio/idleshoot_2.jpg"
                                     alt="..." />
                                 <!-- Portfolio Modal - Text-->
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="is.p1">
                                     Эта игра была разработана в третьем семестре обучения в ИТМО в рамках учебного
                                     проекта.
                                     Разработка велась на движке <strong>Unity</strong>, с использованием двух ассетов от
                                     разных разработчиков,
                                     которые я успешно объединил.
                                 </p>
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="is.p2">
                                     Одним из условий проекта было минимальное самостоятельное написание кода, с чем я
                                     почти справился. 😄
                                     В процессе работы попробовал реализовать онлайн-режим через <strong>Fusion</strong>,
@@ -325,13 +327,13 @@
                                     и успешно добавил сетевой функционал, несмотря на то, что ассеты не были рассчитаны
                                     на онлайн-игру.
                                 </p>
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="is.p3">
                                     Дополнительно интегрировал <strong>Google Analytics</strong> для сбора статистики
                                     и настроил <strong>CI/CD</strong> в GitHub с помощью <em>game-ci</em> и локального
                                     runner'а
                                     (из-за нехватки квоты как на GitHub, так и на GitLab).
                                 </p>
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="is.p4">
                                     В завершение я успешно опубликовал игру в <strong>Google Play Store</strong>. 🎉
                                 </p>
                                 <a class="btn btn-xl btn-primary"
@@ -343,7 +345,7 @@
                                 <br><br>
                                 <button class="btn btn-primary" data-bs-dismiss="modal">
                                     <i class="fas fa-xmark fa-fw"></i>
-                                    Close Window
+                                    <span data-i18n="modal.close">Close Window</span>
                                 </button>
                             </div>
                         </div>
@@ -357,7 +359,7 @@
     <section class="page-section portfolio" id="portfolio">
         <div class="container">
             <!-- Portfolio Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Графика и движки</h2>
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0" data-i18n="graphics.heading">Графика и движки</h2>
             <!-- Icon Divider-->
             <div class="divider-custom">
                 <div class="divider-custom-line"></div>
@@ -434,20 +436,20 @@
                                     src="https://www.youtube.com/embed/y8b7DKhe4Lg?si=L9WRngnaD3qBsK6Z">
                                 </iframe>
                                 <!-- Portfolio Modal - Text-->
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="va.p1">
                                     Это моя выпускная бакалаврская работа, выполненная на <strong>C++</strong> с
                                     использованием <strong>Vulkan-Hpp</strong>. Проект включает следующие компоненты:
                                 </p>
                                 <ul class="mb-4 list-group">
-                                    <li class="list-group-item">Импорт моделей с поддержкой скелетов и анимаций</li>
-                                    <li class="list-group-item">Возможность создания сложных анимаций с помощью
+                                    <li class="list-group-item" data-i18n="va.li1">Импорт моделей с поддержкой скелетов и анимаций</li>
+                                    <li class="list-group-item" data-i18n="va.li2">Возможность создания сложных анимаций с помощью
                                         анимационного секвенсора</li>
-                                    <li class="list-group-item">Unlit текстурированный шейдер</li>
-                                    <li class="list-group-item">Базовый unlit шейдер с контуром</li>
-                                    <li class="list-group-item">Поддержка гизмов для удобного редактирования сцены</li>
-                                    <li class="list-group-item">Система вьюпортов</li>
+                                    <li class="list-group-item" data-i18n="va.li3">Unlit текстурированный шейдер</li>
+                                    <li class="list-group-item" data-i18n="va.li4">Базовый unlit шейдер с контуром</li>
+                                    <li class="list-group-item" data-i18n="va.li5">Поддержка гизмов для удобного редактирования сцены</li>
+                                    <li class="list-group-item" data-i18n="va.li6">Система вьюпортов</li>
                                 </ul>
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="va.p2">
                                     В проекте использованы библиотеки: <strong>Entt</strong>, <strong>Assimp</strong>,
                                     <strong>ImGui</strong>, <strong>ImGuizmo</strong>.
                                 </p>
@@ -459,7 +461,7 @@
                                 <br><br>
                                 <button class="btn btn-primary" data-bs-dismiss="modal">
                                     <i class="fas fa-xmark fa-fw"></i>
-                                    Close Window
+                                    <span data-i18n="modal.close">Close Window</span>
                                 </button>
                             </div>
                         </div>
@@ -492,33 +494,33 @@
                                     alt="..." />
                                 <!-- Portfolio Modal - Text-->
                                 <p class="mb-4">
-                                    <strong>Движок для рендеринга и игрового процесса</strong><br>
-                                    Разработан в рамках учебного проекта на третьем семестре в ИТМО. Над проектом
-                                    работала команда из 4 человек.<br><br>
+                                    <strong data-i18n="gg.title">Движок для рендеринга и игрового процесса</strong><br>
+                                    <span data-i18n="gg.desc">Разработан в рамках учебного проекта на третьем семестре в ИТМО. Над проектом
+                                    работала команда из 4 человек.</span><br><br>
 
-                                    <strong>Мой вклад в проект:</strong><br>
+                                    <strong data-i18n="gg.contrib">Мой вклад в проект:</strong><br>
                                 <ul class="list-group">
-                                    <li class="list-group-item">Разработка базовой системы рендеринга, включая:
+                                    <li class="list-group-item"><span data-i18n="gg.li1">Разработка базовой системы рендеринга, включая:</span>
                                         <ul class="list-group">
-                                            <li class="list-group-item">Context, Device, буферы, View<T>,
+                                            <li class="list-group-item" data-i18n="gg.li1a">Context, Device, буферы, View<T>,
                                                     DescHeap, Upload, life time managment</li>
-                                            <li class="list-group-item">Реализация первоначального Deferred Renderer,
+                                            <li class="list-group-item" data-i18n="gg.li1b">Реализация первоначального Deferred Renderer,
                                                 Point Light</li>
                                         </ul>
                                     </li>
-                                    <li class="list-group-item">Создание системы видимости на CPU (Cpu Visibility
+                                    <li class="list-group-item" data-i18n="gg.li2">Создание системы видимости на CPU (Cpu Visibility
                                         System) и Frustum Culling с
                                         использованием библиотеки Octree.</li>
-                                    <li class="list-group-item">Разработка игрового фреймворка (Gameplay Framework),
-                                        включая:
+                                    <li class="list-group-item"><span data-i18n="gg.li3">Разработка игрового фреймворка (Gameplay Framework),
+                                        включая:</span>
                                         <ul class="list-group">
-                                            <li class="list-group-item">Реализацию системы игровых объектов (GO) и
+                                            <li class="list-group-item" data-i18n="gg.li3a">Реализацию системы игровых объектов (GO) и
                                                 компонентного workflow</li>
                                         </ul>
                                     </li>
-                                    <li class="list-group-item">Реализация системы сохранения и загрузки сцен</li>
-                                    <li class="list-group-item">Создание системы префабов (реализовано на 5 из 10)</li>
-                                    <li class="list-group-item">Интеграция поддержки Python-скриптов с использованием
+                                    <li class="list-group-item" data-i18n="gg.li4">Реализация системы сохранения и загрузки сцен</li>
+                                    <li class="list-group-item" data-i18n="gg.li5">Создание системы префабов (реализовано на 5 из 10)</li>
+                                    <li class="list-group-item" data-i18n="gg.li6">Интеграция поддержки Python-скриптов с использованием
                                         библиотеки pybind11</li>
                                 </ul>
                                 </p>
@@ -530,7 +532,7 @@
                                 <br><br>
                                 <button class="btn btn-primary" data-bs-dismiss="modal">
                                     <i class="fas fa-xmark fa-fw"></i>
-                                    Close Window
+                                    <span data-i18n="modal.close">Close Window</span>
                                 </button>
                             </div>
                         </div>
@@ -571,36 +573,36 @@
                                     </div>
                                 </div>
                                 <!-- Portfolio Modal - Text-->
-                                <p>
+                                <p data-i18n="sw.p1">
                                     <strong>Контекст:</strong> Проект был разработан в рамках курса по компьютерной
                                     графике на 6-м семестре бакалавриата.
                                 </p>
-                                <p>
+                                <p data-i18n="sw.p2">
                                     <strong>Описание:</strong> Написал программный рендерер на чистом C++ без
                                     использования графических библиотек. В качестве инструмента для создания интерфейса
                                     и виджетов использовал Qt (хотя в ретроспективе лучше было бы выбрать SDL и ImGui).
                                 </p>
-                                <p>
+                                <p data-i18n="sw.p3">
                                     <strong>Реализованные функции:</strong>
                                 </p>
                                 <ul class="list-group">
-                                    <li class="list-group-item">рендеринг с использованием шейдеров</li>
-                                    <li class="list-group-item">программируемые вершинные и фрагментные шейдеры на
+                                    <li class="list-group-item" data-i18n="sw.li1">рендеринг с использованием шейдеров</li>
+                                    <li class="list-group-item" data-i18n="sw.li2">программируемые вершинные и фрагментные шейдеры на
                                         основе виртуальных функций C++.</li>
-                                    <li class="list-group-item">интерполяция вершинных атрибутов с учетом перспективы.
+                                    <li class="list-group-item" data-i18n="sw.li3">интерполяция вершинных атрибутов с учетом перспективы.
                                     </li>
-                                    <li class="list-group-item">отсечение невидимых граней</li>
-                                    <li class="list-group-item">отсечение по ближней плоскости в однородных координатах.
+                                    <li class="list-group-item" data-i18n="sw.li4">отсечение невидимых граней</li>
+                                    <li class="list-group-item" data-i18n="sw.li5">отсечение по ближней плоскости в однородных координатах.
                                     </li>
-                                    <li class="list-group-item">тест глубины для корректного отображения объектов</li>
-                                    <li class="list-group-item">модель освещения Блинна-Фонга</li>
-                                    <li class="list-group-item">наложение текстур</li>
-                                    <li class="list-group-item">алгоритм Сазерленда-Ходжмана для отсечения полигонов
+                                    <li class="list-group-item" data-i18n="sw.li6">тест глубины для корректного отображения объектов</li>
+                                    <li class="list-group-item" data-i18n="sw.li7">модель освещения Блинна-Фонга</li>
+                                    <li class="list-group-item" data-i18n="sw.li8">наложение текстур</li>
+                                    <li class="list-group-item" data-i18n="sw.li9">алгоритм Сазерленда-Ходжмана для отсечения полигонов
                                     </li>
-                                    <li class="list-group-item">визуализация пространственных кривых Безье</li>
-                                    <li class="list-group-item">рендеринг гладких поверхностей Безье</li>
+                                    <li class="list-group-item" data-i18n="sw.li10">визуализация пространственных кривых Безье</li>
+                                    <li class="list-group-item" data-i18n="sw.li11">рендеринг гладких поверхностей Безье</li>
                                 </ul>
-                                <p>
+                                <p data-i18n="sw.p4">
                                     <strong>Итог:</strong> Проект позволил глубже понять принципы работы графических
                                     конвейеров и рендеринга, а также улучшить навыки работы с C++ и математикой для
                                     компьютерной графики.
@@ -614,7 +616,7 @@
                                 <br><br>
                                 <button class="btn btn-primary" data-bs-dismiss="modal">
                                     <i class="fas fa-xmark fa-fw"></i>
-                                    Close Window
+                                    <span data-i18n="modal.close">Close Window</span>
                                 </button>
                             </div>
                         </div>
@@ -678,13 +680,13 @@
                                 <img class="img-fluid rounded mb-5" src="assets/img/portfolio/offline_ase_potf.gif"
                                     alt="..." />
                                 <!-- Portfolio Modal - Text-->
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="ase.p1">
                                     <strong>Магистерская диссертация:</strong> Исследование и разработка методов
                                     ускорения обучения контроллера низкого уровня для алгоритма <em>Adversarial Skill
                                         Embeddings</em> с использованием подходов <em>офлайн обучения с
                                         подкреплением</em>.
                                 </p>
-                                <p class="mb-4">
+                                <p class="mb-4" data-i18n="ase.p2">
                                     В рамках работы исследуются возможности оптимизации процесса обучения, что позволяет
                                     повысить эффективность и снизить вычислительные затраты при обучении агентов в
                                     сложных средах.
@@ -697,7 +699,7 @@
                                 <br><br>
                                 <button class="btn btn-primary" data-bs-dismiss="modal">
                                     <i class="fas fa-xmark fa-fw"></i>
-                                    Close Window
+                                    <span data-i18n="modal.close">Close Window</span>
                                 </button>
                             </div>
                         </div>
@@ -713,14 +715,14 @@
             <div class="row">
                 <!-- Footer Location-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="text-uppercase mb-4">Место нахождения</h4>
-                    <p class="lead mb-0">
+                    <h4 class="text-uppercase mb-4" data-i18n="footer.location">Место нахождения</h4>
+                    <p class="lead mb-0" data-i18n="footer.city">
                         Санкт-Петербург
                     </p>
                 </div>
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="text-uppercase mb-4">Где меня найти</h4>
+                    <h4 class="text-uppercase mb-4" data-i18n="footer.social">Где меня найти</h4>
                     <a class="btn btn-outline-light btn-social mx-1"
                         href="https://www.linkedin.com/in/oleg-evdokimov-6877b71ba/"><i
                             class="fab fa-fw fa-linkedin-in"></i></a>
@@ -744,6 +746,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
     <script src="js/hero-shader.js"></script>
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->

@@ -18,11 +18,11 @@
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 
-<body id="page-top">
+<body id="page-top" data-page="cv">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
         <a class="navbar-brand js-scroll-trigger" href="#page-top">
-            <span class="d-block d-lg-none">Евдокимов Олег</span>
+            <span class="d-block d-lg-none" data-i18n="nav.brand">Евдокимов Олег</span>
             <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2"
                     src="../assets/img/portfolio/face.png" alt="..." /></span>
         </a>
@@ -31,12 +31,13 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Обо мне</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Опыт</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Образование</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="../index.html">Портфолио</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Навыки</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">Интересы</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about" data-i18n="cv.nav.about">Обо мне</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience" data-i18n="cv.nav.experience">Опыт</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education" data-i18n="cv.nav.education">Образование</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="../index.html" data-i18n="nav.portfolio">Портфолио</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills" data-i18n="cv.nav.skills">Навыки</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests" data-i18n="cv.nav.interests">Интересы</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-lang-toggle>EN</a></li>
             </ul>
         </div>
     </nav>
@@ -46,38 +47,38 @@
         <section class="resume-section" id="about">
             <div class="resume-section-content">
                 <h1 class="mb-0">
-                    Евдокимов
-                    <span class="text-primary">Олег</span>
+                    <span data-i18n="cv.name.1">Евдокимов</span>
+                    <span class="text-primary" data-i18n="cv.name.2">Олег</span>
                 </h1>
-                <div class="subheading mb-5">
+                <div class="subheading mb-5" data-i18n="cv.about.contact">
                     Санкт-Петербург. (921)-862-59-10
                     <a href="mailto:olegevkd@gmail.com">olegevkd@gmail.com</a>
                 </div>
-                <p>
+                <p data-i18n="cv.about.p1">
                     Закончил магистратуру «Школа разработки видеоигр» ИТМО. За время учёбы делал проекты от прототипа
                     до релиза: одиночную <strong>Not A Title</strong> на <strong>UE5</strong>, многопользовательскую
                     <strong><a href="https://store.steampowered.com/app/4781740/Funky_Pirates/">Funky Pirates</a></strong> (готовится к выходу в Steam), <strong>Idle Shooter</strong> на
                     <strong>Unity</strong> и собственный движок <strong>GiiGa Engine</strong>. Бакалавриат закончил в ЛЭТИ
                     с отличием по вычислительной технике.
                 </p>
-                <p>
+                <p data-i18n="cv.about.p2">
                     Сейчас работаю в <strong>Леста Games</strong>, команда Tech&Tools, проект «Мир Танков» —
                     <strong>программист игровой компьютерной графики</strong>. Пишу шейдеры и эффекты для
                     художников, работаю с <strong>DirectX 11</strong> и проприетарным FX-фреймворком студии. Параллельно
                     преподаю программирование в Unity для детей.
                 </p>
-                <p>
+                <p data-i18n="cv.about.p3">
                     Помимо работы, развиваю собственные проекты: Funky Pirates скоро выходит в Steam, также делаю и
                     выпускаю игры на <strong>Яндекс.Игры</strong>.
                 </p>
-                <p>
+                <p data-i18n="cv.about.p4">
                     В работе использую <strong>Unreal Engine</strong>, <strong>Unity</strong>, <strong>C++</strong>,
                     <strong>Blueprints</strong>, сетевые технологии (<strong>Steam Sessions, выделенные
                         серверы</strong>),
                     <strong>Direct3D 12</strong>, <strong>Vulkan</strong>, а также интеграцию <strong>аналитики</strong> и
                     <strong>CI/CD</strong>. Пишу технические статьи, делаю трейлеры и музыку для игр.
                 </p>
-                <p>
+                <p data-i18n="cv.about.p5">
                     Основной интерес — <strong>компьютерная графика</strong>, рендеринг и разработка движков. Есть
                     базовый опыт с ML/Python и физикой персонажей из магистерской диссертации, но сейчас сфокусирован на
                     графике и инструментах.
@@ -96,7 +97,7 @@
         <!-- Experience-->
         <section class="resume-section" id="experience">
             <div class="resume-section-content">
-                <h2 class="mb-5">Опыт Работы</h2>
+                <h2 class="mb-5" data-i18n="cv.exp.heading">Опыт Работы</h2>
                 <!--
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
@@ -111,22 +112,22 @@
                 </div>-->
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <h3 class="mb-0">Программист игровой компьютерной графики</h3>
-                        <div class="subheading mb-3">Леста Games (проект «Мир Танков»)</div>
-                        <p>Работаю в команде Tech&Tools. Пишу шейдеры и эффекты для художников, использую
+                        <h3 class="mb-0" data-i18n="cv.exp.job1.title">Программист игровой компьютерной графики</h3>
+                        <div class="subheading mb-3" data-i18n="cv.exp.job1.company">Леста Games (проект «Мир Танков»)</div>
+                        <p data-i18n="cv.exp.job1.desc">Работаю в команде Tech&Tools. Пишу шейдеры и эффекты для художников, использую
                             DirectX 11 и проприетарный FX-фреймворк студии. Участвую в задачах по атмосферным эффектам
                             и рендерингу.</p>
                     </div>
-                    <div class="flex-shrink-0"><span class="text-primary">2025 — настоящее время</span></div>
+                    <div class="flex-shrink-0"><span class="text-primary" data-i18n="cv.exp.job1.date">2025 — настоящее время</span></div>
                 </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <h3 class="mb-0">Преподаватель Unity</h3>
-                        <div class="subheading mb-3">Школа программирования для детей</div>
-                        <p>Веду курс программирования игр на Unity: помогаю детям разбираться в C#, движке и основах
+                        <h3 class="mb-0" data-i18n="cv.exp.job2.title">Преподаватель Unity</h3>
+                        <div class="subheading mb-3" data-i18n="cv.exp.job2.company">Школа программирования для детей</div>
+                        <p data-i18n="cv.exp.job2.desc">Веду курс программирования игр на Unity: помогаю детям разбираться в C#, движке и основах
                             разработки.</p>
                     </div>
-                    <div class="flex-shrink-0"><span class="text-primary">2025 — настоящее время</span></div>
+                    <div class="flex-shrink-0"><span class="text-primary" data-i18n="cv.exp.job2.date">2025 — настоящее время</span></div>
                 </div>
             </div>
         </section>
@@ -134,18 +135,18 @@
         <!-- Education-->
         <section class="resume-section" id="education">
             <div class="resume-section-content">
-                <h2 class="mb-5">Образование</h2>
+                <h2 class="mb-5" data-i18n="cv.edu.heading">Образование</h2>
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <h3 class="mb-0">Университет ИТМО</h3>
-                        <div class="subheading mb-3">Магистратура "Школа разработки видеоигр"</div>
+                        <h3 class="mb-0" data-i18n="cv.edu.1.school">Университет ИТМО</h3>
+                        <div class="subheading mb-3" data-i18n="cv.edu.1.degree">Магистратура "Школа разработки видеоигр"</div>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">2023 — 2025</span></div>
                 </div>
                 <div class="d-flex flex-column flex-md-row justify-content-between">
                     <div class="flex-grow-1">
-                        <h3 class="mb-0">Санкт-Петербургский государственный электротехнический университет "ЛЭТИ" им. В.И. Ульянова (Ленина)</h3>
-                        <div class="subheading mb-3">Бакалавр "Вычислительная техника"</div>
+                        <h3 class="mb-0" data-i18n="cv.edu.2.school">Санкт-Петербургский государственный электротехнический университет "ЛЭТИ" им. В.И. Ульянова (Ленина)</h3>
+                        <div class="subheading mb-3" data-i18n="cv.edu.2.degree">Бакалавр "Вычислительная техника"</div>
                     </div>
                     <div class="flex-shrink-0"><span class="text-primary">2019 - 2023</span></div>
                 </div>
@@ -155,8 +156,8 @@
         <!-- Skills-->
         <section class="resume-section" id="skills">
             <div class="resume-section-content">
-                <h2 class="mb-5">Навыки</h2>
-                <div class="subheading mb-3">Языки программирования и инструменты</div>
+                <h2 class="mb-5" data-i18n="cv.skills.heading">Навыки</h2>
+                <div class="subheading mb-3" data-i18n="cv.skills.sub">Языки программирования и инструменты</div>
                 <ul class="list-inline dev-icons">
                     <style>
                         .fixed-size-img {
@@ -178,8 +179,8 @@
         <!-- Interests-->
         <section class="resume-section" id="interests">
             <div class="resume-section-content">
-                <h2 class="mb-5">Interests</h2>
-                <p>Я люблю писать музыку. Играю на электро и бас гитаре. Кручу йо-йо.</p>
+                <h2 class="mb-5" data-i18n="cv.interests.heading">Interests</h2>
+                <p data-i18n="cv.interests.p">Я люблю писать музыку. Играю на электро и бас гитаре. Кручу йо-йо.</p>
             </div>
         </section>
         <hr class="m-0" />
@@ -188,6 +189,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
+    <script src="../js/i18n.js"></script>
 </body>
 
 </html>
