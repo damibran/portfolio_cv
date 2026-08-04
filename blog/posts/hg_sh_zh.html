@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Henyey-Greenstein phase function in spherical harmonics, zonal harmonics rotation" />
+    <meta name="author" content="Oleg Evdokimov" />
+    <title>HG in Spherical Harmonics — Oleg Evdokimov Blog</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+        type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../../css/styles.css" rel="stylesheet" />
+    <!-- MathJax-->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">Oleg Evdokimov</a>
+            <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                            href="../../index.html">Portfolio</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                            href="../../cv/cv.html">Resume</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                            href="../blog.html">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Masthead-->
+    <header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Heading-->
+            <h1 class="masthead-heading text-uppercase mb-0">Henyey-Greenstein in Spherical Harmonics</h1>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fa fa-pen-nib"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            <p class="masthead-subheading font-weight-light mb-0">Zonal harmonics and how to rotate them</p>
+            <p class="text-white-50 mt-3 mb-0"><small>2026-07-30</small></p>
+        </div>
+    </header>
+    <!-- Post Content-->
+    <section class="page-section" id="post">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+
+                    <h2 class="text-secondary mb-3">1. Introduction</h2>
+                    <p>This post was prompted by a practical problem. While working on volumetric rendering I wanted a
+                        cheap way to light participating media with environment lighting stored as spherical harmonics
+                        (SH). Two well-known facts collided in my head:</p>
+                    <ul>
+                        <li>SH is a famously convenient approximation of an irradiance map — Ramamoorthi and Hanrahan
+                            showed that diffuse irradiance of any environment map is captured almost entirely by just 9
+                            SH coefficients (bands 0–2).</li>
+                        <li>The Henyey-Greenstein (HG) function is <em>the</em> phase function used in volumetric
+                            rendering to describe anisotropic scattering.</li>
+                    </ul>
+                    <p>So the question is: can we represent the HG lobe itself in SH, and then light a volume with a
+                        couple of dot products instead of any integration? Spoiler: yes, and the key insight is that HG
+                        is a <em>zonal harmonic</em> with beautifully simple coefficients.</p>
+                    <p class="text-muted"><small>Every interactive figure below can be switched between a 3D sphere
+                            view — drag to orbit, scroll to zoom, colored lines are the \(x\) (red), \(y\) (green),
+                            \(z\) (blue) axes — and a polar plot of the underlying Legendre-polynomial expansion. All
+                            \(g\) sliders are linked: change one and every figure updates. Colors and polar radii
+                            use a fixed absolute scale: full saturation / outer ring corresponds to the cap value
+                            adjustable in the bottom-right corner (default \(2\)).</small></p>
+
+                    <h2 class="text-secondary mt-5 mb-3">2. Main part</h2>
+
+                    <h3 class="text-primary mt-4 mb-3">2.1 What is HG</h3>
+                    <p>The Henyey-Greenstein phase function describes the probability density of light being scattered
+                        from direction \(\omega_i\) into direction \(\omega_o\). It depends only on the angle
+                        \(\theta\) between them, \(\cos\theta = \omega_i \cdot \omega_o\):</p>
+                    \[ p(\theta) = \frac{1 - g^2}{4\pi\,(1 + g^2 - 2g\cos\theta)^{3/2}} \]
+                    <p>The single parameter \(g \in (-1, 1)\) is the mean cosine of the scattering angle:
+                        \(g &gt; 0\) gives forward scattering, \(g &lt; 0\) backward scattering, and \(g = 0\) is
+                        isotropic. Drag the slider and watch the lobe stretch:</p>
+
+                    <!-- Viz 1: HG -->
+                    <div class="card mb-4" id="viz-hg">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="View mode">
+                                    <button type="button" class="btn btn-outline-primary active"
+                                        data-mode="sphere">Sphere surface</button>
+                                    <button type="button" class="btn btn-outline-primary" data-mode="plot">Legendre
+                                        plot</button>
+                                </div>
+                                <div class="text-muted small">Henyey-Greenstein phase function</div>
+                            </div>
+                            <div class="sphere-view text-center">
+                                <canvas id="viz-hg-sphere" width="340" height="340"
+                                    class="img-fluid rounded border"></canvas>
+                            </div>
+                            <div class="plot-view text-center" style="display:none">
+                                <canvas id="viz-hg-plot" width="340" height="340"
+                                    class="img-fluid rounded border"></canvas>
+                            </div>
+                            <div class="mt-3">
+                                <label for="viz-hg-g" class="form-label mb-0">g = <span
+                                        id="viz-hg-g-val">0.70</span></label>
+                                <input type="range" class="form-range" id="viz-hg-g" min="-0.9" max="0.95" step="0.01"
+                                    value="0.7">
+                            </div>
+                            <p class="text-muted small mb-0">The lobe points along \(+z\). Positive values are red —
+                                HG is always non-negative. This \(g\) is shared with all other figures.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-primary mt-4 mb-3">2.2 What are SH and ZH</h3>
+                    <p>Spherical harmonics \(Y_l^m(\omega)\) are an orthonormal basis of functions on the sphere, the
+                        analog of the Fourier basis on a circle. Any spherical function can be approximated by</p>
+                    \[ f(\omega) \approx \sum_{l=0}^{N}\sum_{m=-l}^{l} c_l^m\, Y_l^m(\omega), \qquad
+                    \int_{S^2} Y_i(\omega)\, Y_j(\omega)\, d\omega = \delta_{ij}. \]
+                    <p>The basis functions are organized in <em>bands</em> \(l = 0, 1, 2, \dots\), each band \(l\)
+                        containing \(2l+1\) functions. Here are all bands up to the third degree (\(l \le 2\), 9
+                        functions, positive values red, negative blue):</p>
+
+                    <!-- SH bands figure -->
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <div class="row justify-content-center mb-1">
+                                <div class="col-auto">
+                                    <canvas class="sh-band rounded border" data-l="0" data-m="0" width="110"
+                                        height="110"></canvas>
+                                    <div class="small text-muted">\(Y_0^0\)</div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mb-1">
+                                <div class="col-auto">
+                                    <canvas class="sh-band rounded border" data-l="1" data-m="-1" width="110"
+                                        height="110"></canvas>
+                                    <div class="small text-muted">\(Y_1^{-1}\)</div>
+                                </div>
+                                <div class="col-auto">
+                                    <canvas class="sh-band rounded border" data-l="1" data-m="0" width="110"
+                                        height="110"></canvas>
+                                    <div class="small text-muted">\(Y_1^{0}\)</div>
+                                </div>
+                                <div class="col-auto">
+                                    <canvas class="sh-band rounded border" data-l="1" data-m="1" width="110"
+                                        height="110"></canvas>
+                                    <div class="small text-muted">\(Y_1^{1}\)</div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mb-1">
+                                <div class="col-auto">
+                                    <canvas class="sh-band rounded border" data-l="2" data-m="-2" width="110"
+                                        height="110"></canvas>
+                                    <div class="small text-muted">\(Y_2^{-2}\)</div>
+                                </div>
+                                <div class="col-auto">
+                                    <canvas class="sh-band rounded border" data-l="2" data-m="-1" width="110"
+                                        height="110"></canvas>
+                                    <div class="small text-muted">\(Y_2^{-1}\)</div>
+                                </div>
+                                <div class="col-auto">
+                                    <canvas class="sh-band rounded border" data-l="2" data-m="0" width="110"
+                                        height="110"></canvas>
+                                    <div class="small text-muted">\(Y_2^{0}\)</div>
+                                </div>
+                                <div class="col-auto">
+                                    <canvas class="sh-band rounded border" data-l="2" data-m="1" width="110"
+                                        height="110"></canvas>
+                                    <div class="small text-muted">\(Y_2^{1}\)</div>
+                                </div>
+                                <div class="col-auto">
+                                    <canvas class="sh-band rounded border" data-l="2" data-m="2" width="110"
+                                        height="110"></canvas>
+                                    <div class="small text-muted">\(Y_2^{2}\)</div>
+                                </div>
+                            </div>
+                            <p class="text-muted small mb-0 mt-2">Real-valued SH basis functions, bands \(l = 0, 1,
+                                2\).</p>
+                        </div>
+                    </div>
+
+                    <p>The middle column \(m = 0\) is special: those functions depend only on the polar angle
+                        \(\theta\) and are rotationally symmetric about the \(z\)-axis. They are called
+                        <strong>zonal harmonics</strong> (ZH), and they reduce to the Legendre polynomials
+                        \(P_l(\cos\theta)\). A ZH function is just a 1D polynomial wrapped around an axis:</p>
+                    \[ f(\theta) = \frac{1}{4\pi}\sum_{l=0}^{N} (2l+1)\, c_l\, P_l(\cos\theta), \qquad
+                    P_0 = 1,\; P_1 = x,\; P_2 = \tfrac{3x^2 - 1}{2},\; P_3 = \tfrac{5x^3 - 3x}{2}. \]
+                    <p>Play with the coefficients of the first three degrees below. Try for example
+                        \((c_0, c_1, c_2, c_3) = (1,\ 0.7,\ 0.49,\ 0.343)\):</p>
+
+                    <!-- Viz 2: free ZH -->
+                    <div class="card mb-4" id="viz-zh">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="View mode">
+                                    <button type="button" class="btn btn-outline-primary active"
+                                        data-mode="sphere">Sphere surface</button>
+                                    <button type="button" class="btn btn-outline-primary" data-mode="plot">Legendre
+                                        plot</button>
+                                </div>
+                                <div class="text-muted small">Zonal harmonic, 4 free coefficients</div>
+                            </div>
+                            <div class="sphere-view text-center">
+                                <canvas id="viz-zh-sphere" width="340" height="340"
+                                    class="img-fluid rounded border"></canvas>
+                            </div>
+                            <div class="plot-view text-center" style="display:none">
+                                <canvas id="viz-zh-plot" width="340" height="340"
+                                    class="img-fluid rounded border"></canvas>
+                            </div>
+                            <div class="mt-3">
+                                <label for="viz-zh-c0" class="form-label mb-0">c₀ = <span
+                                        id="viz-zh-c0-val">1.00</span></label>
+                                <input type="range" class="form-range" id="viz-zh-c0" min="-1" max="1" step="0.01"
+                                    value="1">
+                                <label for="viz-zh-c1" class="form-label mb-0">c₁ = <span
+                                        id="viz-zh-c1-val">0.70</span></label>
+                                <input type="range" class="form-range" id="viz-zh-c1" min="-1" max="1" step="0.01"
+                                    value="0.7">
+                                <label for="viz-zh-c2" class="form-label mb-0">c₂ = <span
+                                        id="viz-zh-c2-val">0.49</span></label>
+                                <input type="range" class="form-range" id="viz-zh-c2" min="-1" max="1" step="0.01"
+                                    value="0.49">
+                                <label for="viz-zh-c3" class="form-label mb-0">c₃ = <span
+                                        id="viz-zh-c3-val">0.34</span></label>
+                                <input type="range" class="form-range" id="viz-zh-c3" min="-1" max="1" step="0.01"
+                                    value="0.343">
+                            </div>
+                            <p class="text-muted small mb-0">Blue regions are negative — unlike HG, a truncated ZH
+                                series can dip below zero. Changing the shared \(g\) anywhere resets these
+                                coefficients to \((1, g, g^2, g^3)\).</p>
+                        </div>
+                    </div>
+
+                    <p>Notice anything? With coefficients \((1, 0.7, 0.49, 0.343)\) the shape is suspiciously similar
+                        to the HG lobe with \(g = 0.7\). That is no coincidence: \(0.49 = 0.7^2\) and
+                        \(0.343 = 0.7^3\). Indeed, the generating function of the Legendre polynomials gives</p>
+                    \[ \sum_{l=0}^{\infty} (2l+1)\, g^l\, P_l(x) = \frac{1 - g^2}{(1 + g^2 - 2gx)^{3/2}}, \]
+                    <p>which is exactly the HG numerator. Therefore HG in ZH form is simply</p>
+                    \[ p(\theta) = \frac{1}{4\pi}\sum_{l=0}^{\infty} (2l+1)\, g^l\, P_l(\cos\theta)
+                    \quad\Longrightarrow\quad (c_0, c_1, c_2, c_3, \dots) = (1,\ g,\ g^2,\ g^3,\ \dots). \]
+                    <p>The coefficients are just the powers of \(g\)! Truncating after \(l = 3\) already gives a very
+                        usable approximation — compare the 4-term ZH against the exact HG:</p>
+
+                    <!-- Viz 3: ZH(1,g,g^2,g^3) vs HG -->
+                    <div class="card mb-4" id="viz-zhhg">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="View mode">
+                                    <button type="button" class="btn btn-outline-primary active"
+                                        data-mode="sphere">Sphere surface</button>
+                                    <button type="button" class="btn btn-outline-primary" data-mode="plot">Legendre
+                                        plot</button>
+                                </div>
+                                <div class="text-muted small">ZH with HG coefficients</div>
+                            </div>
+                            <div class="sphere-view">
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                        <canvas id="viz-zhhg-sphere-zh" width="260" height="260"
+                                            class="img-fluid rounded border"></canvas>
+                                        <div class="small text-muted">ZH, 4 terms</div>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <canvas id="viz-zhhg-sphere-hg" width="260" height="260"
+                                            class="img-fluid rounded border"></canvas>
+                                        <div class="small text-muted">HG, exact</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="plot-view text-center" style="display:none">
+                                <canvas id="viz-zhhg-plot" width="340" height="340"
+                                    class="img-fluid rounded border"></canvas>
+                                <div class="small text-muted">red — ZH, 4 terms; dashed black — exact HG</div>
+                            </div>
+                            <div class="mt-3">
+                                <label for="viz-zhhg-g" class="form-label mb-0">g = <span
+                                        id="viz-zhhg-g-val">0.70</span>, coefficients <span
+                                        id="viz-zhhg-coeffs">(1, 0.70, 0.49, 0.34)</span></label>
+                                <input type="range" class="form-range" id="viz-zhhg-g" min="-0.9" max="0.95"
+                                    step="0.01" value="0.7">
+                            </div>
+                            <p class="text-muted small mb-0">At high \(g\) the truncated series starts to ring — the
+                                blue halo is the Gibbs phenomenon. More bands fix it.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-primary mt-4 mb-3">2.3 Rotating ZH into a direction</h3>
+                    <p>So far our lobe points along \(+z\). A phase function must follow the light direction
+                        \(\mathbf{d}\). Because a zonal harmonic depends only on the angle to its axis, rotating it is
+                        trivial — just evaluate the same 1D polynomial at the cosine with the new axis:</p>
+                    \[ f_{\mathbf{d}}(\omega) = \frac{1}{4\pi}\sum_{l=0}^{N} (2l+1)\, c_l\,
+                    P_l(\omega \cdot \mathbf{d}). \]
+                    <p>If you need full SH coefficients of the rotated lobe (e.g. to store it next to your irradiance
+                        SH), the addition theorem gives them in closed form:</p>
+                    \[ c_l^m(\mathbf{d}) = c_l\, Y_l^m(\mathbf{d}), \]
+                    <p>i.e. the coefficient vector of band \(l\) is the power \(g^l\) times the SH basis evaluated at
+                        the direction. Try aiming the lobe around:</p>
+
+                    <!-- Viz 4: rotated ZH -->
+                    <div class="card mb-4" id="viz-rot">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="View mode">
+                                    <button type="button" class="btn btn-outline-primary active"
+                                        data-mode="sphere">Sphere surface</button>
+                                    <button type="button" class="btn btn-outline-primary" data-mode="plot">Legendre
+                                        plot</button>
+                                </div>
+                                <div class="text-muted small">Rotated ZH lobe with HG coefficients</div>
+                            </div>
+                            <div class="sphere-view text-center">
+                                <canvas id="viz-rot-sphere" width="340" height="340"
+                                    class="img-fluid rounded border"></canvas>
+                            </div>
+                            <div class="plot-view text-center" style="display:none">
+                                <canvas id="viz-rot-plot" width="340" height="340"
+                                    class="img-fluid rounded border"></canvas>
+                            </div>
+                            <div class="mt-3">
+                                <label for="viz-rot-g" class="form-label mb-0">g = <span
+                                        id="viz-rot-g-val">0.70</span></label>
+                                <input type="range" class="form-range" id="viz-rot-g" min="-0.9" max="0.95"
+                                    step="0.01" value="0.7">
+                                <label for="viz-rot-theta" class="form-label mb-0">direction polar angle θ = <span
+                                        id="viz-rot-theta-val">60°</span></label>
+                                <input type="range" class="form-range" id="viz-rot-theta" min="0" max="180" step="1"
+                                    value="60">
+                                <label for="viz-rot-phi" class="form-label mb-0">direction azimuth φ = <span
+                                        id="viz-rot-phi-val">30°</span></label>
+                                <input type="range" class="form-range" id="viz-rot-phi" min="0" max="360" step="1"
+                                    value="30">
+                            </div>
+                            <p class="text-muted small mb-0">The arrow is the axis \(\mathbf{d}\). Note that the polar
+                                plot never changes: rotation preserves the shape, only the axis moves.</p>
+                        </div>
+                    </div>
+
+                    <h2 class="text-secondary mt-5 mb-3">3. Conclusion</h2>
+                    <p>That's all, folks. The HG phase function is a zonal harmonic with coefficients
+                        \((1, g, g^2, g^3, \dots)\), and a zonal harmonic is rotated into any direction by a single
+                        dot product per band.</p>
+                    <p>And if we wanted to integrate it against an irradiance (or radiance) environment map stored in
+                        SH, orthonormality collapses the integral into a plain dot product of the coefficient
+                        vectors:</p>
+                    \[ \int_{S^2} L(\omega)\, p(\omega)\, d\omega = \sum_{l,m} L_l^m\, p_l^m
+                    = \sum_{l=0}^{N} g^l \sum_{m=-l}^{l} L_l^m\, Y_l^m(\mathbf{d}). \]
+                    <p>Nine to sixteen multiplies for bands 2–3, no quadrature, no sampling — volumetric ambient
+                        lighting with an HG lobe for (almost) free.</p>
+
+                    <h2 class="text-secondary mt-5 mb-3">4. References</h2>
+                    <ol>
+                        <li>Henyey, L. G., Greenstein, J. L. (1941). <em>Diffuse radiation in the galaxy.</em> The
+                            Astrophysical Journal, 93, 70–83. <a
+                                href="https://doi.org/10.1086/144246">doi:10.1086/144246</a></li>
+                        <li>Ramamoorthi, R., Hanrahan, P. (2001). <em>An Efficient Representation for Irradiance
+                                Environment Maps.</em> SIGGRAPH 2001. <a
+                                href="https://doi.org/10.1145/383259.383317">doi:10.1145/383259.383317</a></li>
+                        <li>Sloan, P.-P. (2008). <em>Stupid Spherical Harmonics (SH) Tricks.</em> GDC 2008. <a
+                                href="https://www.ppsloan.org/publications/StupidSH36.pdf">ppsloan.org</a></li>
+                        <li>Pharr, M., Jakob, W., Humphreys, G. <em>Physically Based Rendering: From Theory to
+                                Implementation</em> (4th ed.), chapter on phase functions. <a
+                                href="https://pbr-book.org/4ed/Volume_Scattering/Phase_Functions">pbr-book.org</a></li>
+                    </ol>
+
+                    <div class="text-center mt-5">
+                        <a class="btn btn-primary" href="../blog.html">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Back to blog
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Floating scale control -->
+    <div class="card shadow position-fixed bottom-0 end-0 m-3" style="z-index: 1040; width: 230px;">
+        <div class="card-body py-2 px-3">
+            <label for="value-cap" class="form-label mb-0 small">color / plot scale cap = <span
+                    id="value-cap-val">2.00</span></label>
+            <input type="range" class="form-range" id="value-cap" min="0.01" max="2" step="0.01" value="2">
+            <div class="text-muted" style="font-size: 0.7rem;">absolute units — full red/blue saturation
+                and the outer polar ring correspond to this value</div>
+        </div>
+    </div>
+    <!-- Footer-->
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Footer Social Icons-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase mb-4">Find me online</h4>
+                    <a class="btn btn-outline-light btn-social mx-1"
+                        href="https://www.linkedin.com/in/oleg-evdokimov-6877b71ba/"><i
+                            class="fab fa-fw fa-linkedin-in"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://vk.com/damibran"><i
+                            class="fa-brands fa-vk"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://t.me/damibran"><i
+                            class="fa-brands fa-telegram"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://github.com/damibran"><i
+                            class="fab fa-fw fa-github"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://x.com/damibran"><i
+                            class="fab fa-fw fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Copyright Section-->
+    <div class="copyright py-4 text-center text-white">
+        <div class="container"><small>Copyright &copy; damibran 2025</small></div>
+    </div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="../../js/scripts.js"></script>
+    <!-- Post visualizations-->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // ---------- math ----------
+        var LEGENDRE = [
+            function (x) { return 1; },
+            function (x) { return x; },
+            function (x) { return (3 * x * x - 1) / 2; },
+            function (x) { return (5 * x * x * x - 3 * x) / 2; }
+        ];
+        var TWO_L_PLUS_1 = [1, 3, 5, 7];
+        var Z_AXIS = [0, 0, 1];
+
+        function hgFn(g) {
+            return function (x) {
+                return (1 - g * g) / (4 * Math.PI * Math.pow(1 + g * g - 2 * g * x, 1.5));
+            };
+        }
+
+        function zhFn(c) {
+            return function (x) {
+                var v = 0;
+                for (var l = 0; l < c.length; l++) v += c[l] * TWO_L_PLUS_1[l] * LEGENDRE[l](x);
+                return v / (4 * Math.PI);
+            };
+        }
+
+        function hgZhCoeffs(g, n) {
+            var c = [], p = 1;
+            for (var i = 0; i < n; i++) { c.push(p); p *= g; }
+            return c;
+        }
+
+        function realSH(l, m, d) {
+            var x = d[0], y = d[1], z = d[2];
+            if (l === 0) return 0.282095;
+            if (l === 1) {
+                if (m === -1) return 0.488603 * y;
+                if (m === 0) return 0.488603 * z;
+                return 0.488603 * x;
+            }
+            if (m === -2) return 1.092548 * x * y;
+            if (m === -1) return 1.092548 * y * z;
+            if (m === 0) return 0.315392 * (3 * z * z - 1);
+            if (m === 1) return 1.092548 * x * z;
+            return 0.546274 * (x * x - y * y);
+        }
+
+        function axisFn(f, axis) {
+            return function (d) { return f(d[0] * axis[0] + d[1] * axis[1] + d[2] * axis[2]); };
+        }
+
+        function maxAbsOnSphere(fn) {
+            var N = 700, m = 1e-9, golden = Math.PI * (3 - Math.sqrt(5));
+            for (var i = 0; i < N; i++) {
+                var z = 1 - 2 * (i + 0.5) / N;
+                var r = Math.sqrt(Math.max(0, 1 - z * z));
+                var a = golden * i;
+                m = Math.max(m, Math.abs(fn([r * Math.cos(a), r * Math.sin(a), z])));
+            }
+            return m;
+        }
+
+        // ---------- shared state ----------
+        var state = { g: 0.7, theta: 60, phi: 30 };
+
+        var VALUE_CAP = 0.8; // absolute value mapped to full color saturation / outer plot ring
+
+        // ---------- 3D sphere view (three.js) ----------
+        function makeSphereView(canvas) {
+            var w = canvas.width, h = canvas.height;
+            var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.setSize(w, h, false);
+            canvas.style.width = w + 'px';
+            canvas.style.height = 'auto';
+
+            var scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xffffff);
+
+            var camera = new THREE.PerspectiveCamera(35, w / h, 0.1, 100);
+            camera.up.set(0, 0, 1);
+            var camR = 3.;
+            camera.position.set(camR, camR, camR);
+
+            var controls = new OrbitControls(camera, canvas);
+            controls.enablePan = false;
+            controls.minDistance = 1.6;
+            controls.maxDistance = 6;
+
+            scene.add(new THREE.AxesHelper(1.3));
+            var light = new THREE.DirectionalLight(0xffffff, 1.1);
+            light.position.set(-1, 1.6, 1.4);
+            scene.add(light);
+            scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+
+            var geo = new THREE.SphereGeometry(1, 128, 96);
+            geo.setAttribute('color',
+                new THREE.BufferAttribute(new Float32Array(geo.attributes.position.count * 3), 3));
+            var mesh = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ vertexColors: true }));
+            scene.add(mesh);
+
+            var v = new THREE.Vector3();
+            var view = {
+                camera: camera,
+                controls: controls,
+                render: function () { renderer.render(scene, camera); },
+                set: function (fn) {
+                    var pos = geo.attributes.position, col = geo.attributes.color;
+                    for (var i = 0; i < pos.count; i++) {
+                        v.fromBufferAttribute(pos, i).normalize();
+                        var t = Math.max(-1, Math.min(1, fn([v.x, v.y, v.z]) / VALUE_CAP));
+                        var r, g, b;
+                        if (t >= 0) { r = 252 / 255; g = (245 - 195 * t) / 255; b = (240 - 215 * t) / 255; }
+                        else { r = (245 + 195 * t) / 255; g = (248 + 130 * t) / 255; b = 252 / 255; }
+                        col.setXYZ(i, r, g, b);
+                    }
+                    col.needsUpdate = true;
+                    view.render();
+                },
+                arrow: null,
+                setArrow: function (dir) {
+                    if (!view.arrow) {
+                        view.arrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1),
+                            new THREE.Vector3(0, 0, 0), 1.35, 0x212529, 0.14, 0.08);
+                        scene.add(view.arrow);
+                    }
+                    view.arrow.setDirection(new THREE.Vector3(dir[0], dir[1], dir[2]));
+                    view.render();
+                }
+            };
+            controls.addEventListener('change', view.render);
+            return view;
+        }
+
+        // ---------- 2D sphere renderer (static SH bands figure) ----------
+        var ROT_X = 0.45, ROT_Y = -0.6;
+        var CX = Math.cos(ROT_X), SX = Math.sin(ROT_X);
+        var CY = Math.cos(ROT_Y), SY = Math.sin(ROT_Y);
+        var LIGHT = (function () {
+            var v = [-0.45, 0.75, 0.6], n = Math.hypot(v[0], v[1], v[2]);
+            return [v[0] / n, v[1] / n, v[2] / n];
+        })();
+
+        function viewToWorld(x, y, z) {
+            var y1 = y * CX - z * SX, z1 = y * SX + z * CX;
+            return [x * CY + z1 * SY, y1, -x * SY + z1 * CY];
+        }
+
+        function renderSphere(canvas, fn) {
+            var S = canvas.width;
+            var ctx = canvas.getContext('2d');
+            var img = ctx.createImageData(S, S);
+            var data = img.data;
+            var maxAbs = maxAbsOnSphere(fn);
+            for (var py = 0; py < S; py++) {
+                var ny = (py + 0.5) / S * 2 - 1;
+                for (var px = 0; px < S; px++) {
+                    var nx = (px + 0.5) / S * 2 - 1;
+                    var r2 = nx * nx + ny * ny;
+                    var idx = (py * S + px) * 4;
+                    if (r2 > 1) { data[idx + 3] = 0; continue; }
+                    var nz = Math.sqrt(1 - r2);
+                    var val = fn(viewToWorld(nx, -ny, nz));
+                    var t = Math.max(-1, Math.min(1, val / maxAbs));
+                    var r, g, b;
+                    if (t >= 0) { r = 252; g = 245 - 195 * t; b = 240 - 215 * t; }
+                    else { r = 245 + 195 * t; g = 248 + 130 * t; b = 252; }
+                    var shade = 0.5 + 0.5 * Math.max(0, nx * LIGHT[0] + (-ny) * LIGHT[1] + nz * LIGHT[2]);
+                    data[idx] = r * shade;
+                    data[idx + 1] = g * shade;
+                    data[idx + 2] = b * shade;
+                    data[idx + 3] = 255;
+                }
+            }
+            ctx.putImageData(img, 0, 0);
+            ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(S / 2, S / 2, S / 2 - 1, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+
+        // ---------- polar (Legendre) plot ----------
+        function renderPolar(canvas, series) {
+            var w = canvas.width, h = canvas.height;
+            var ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, w, h);
+            var cx = w / 2, cy = h / 2, R = Math.min(w, h) / 2 - 34, k, th;
+            ctx.strokeStyle = '#ced4da';
+            ctx.setLineDash([4, 4]);
+            ctx.lineWidth = 1;
+            ctx.fillStyle = '#6c757d';
+            ctx.font = '12px Lato, sans-serif';
+            for (var ri = 1; ri <= 4; ri++) {
+                var ring = VALUE_CAP * ri / 4;
+                var rr = ring / VALUE_CAP * R;
+                ctx.beginPath(); ctx.arc(cx, cy, rr, 0, 2 * Math.PI); ctx.stroke();
+                ctx.fillText(ring < 1 ? ring.toFixed(2) : ring.toFixed(1), cx + rr + 3, cy + 4);
+            }
+            ctx.setLineDash([]);
+            ctx.strokeStyle = '#dee2e6';
+            ctx.beginPath(); ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx, cy - R); ctx.lineTo(cx, cy + R); ctx.stroke();
+            ctx.fillText('0°', cx + 4, cy - R + 14);
+            ctx.fillText('180°', cx + 4, cy + R - 6);
+            for (var si = 0; si < series.length; si++) {
+                var s2 = series[si];
+                var pts = [];
+                for (k = 0; k <= 720; k++) {
+                    th = k / 720 * 2 * Math.PI;
+                    var val = s2.fn(Math.cos(th));
+                    var r = Math.max(-R, Math.min(R, val / VALUE_CAP * R));
+                    pts.push([cx + r * Math.sin(th), cy - r * Math.cos(th), val]);
+                }
+                if (s2.fill) {
+                    ctx.beginPath();
+                    ctx.moveTo(pts[0][0], pts[0][1]);
+                    for (k = 1; k < pts.length; k++) ctx.lineTo(pts[k][0], pts[k][1]);
+                    ctx.closePath();
+                    ctx.fillStyle = s2.fill;
+                    ctx.fill();
+                }
+                ctx.lineWidth = 2;
+                ctx.setLineDash(s2.dash || []);
+                if (s2.signColors) {
+                    for (k = 0; k < pts.length - 1; k++) {
+                        ctx.beginPath();
+                        ctx.moveTo(pts[k][0], pts[k][1]);
+                        ctx.lineTo(pts[k + 1][0], pts[k + 1][1]);
+                        ctx.strokeStyle = pts[k][2] >= 0 ? '#dc3545' : '#0d6efd';
+                        ctx.stroke();
+                    }
+                } else {
+                    ctx.beginPath();
+                    ctx.moveTo(pts[0][0], pts[0][1]);
+                    for (k = 1; k < pts.length; k++) ctx.lineTo(pts[k][0], pts[k][1]);
+                    ctx.strokeStyle = s2.color || '#212529';
+                    ctx.stroke();
+                }
+                ctx.setLineDash([]);
+            }
+        }
+
+        // ---------- view-mode toggle ----------
+        function bindViz(rootId, render) {
+            var root = document.getElementById(rootId);
+            var btns = root.querySelectorAll('[data-mode]');
+            btns.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    btns.forEach(function (x) { x.classList.remove('active'); });
+                    b.classList.add('active');
+                    root.querySelector('.sphere-view').style.display =
+                        b.dataset.mode === 'sphere' ? '' : 'none';
+                    root.querySelector('.plot-view').style.display =
+                        b.dataset.mode === 'plot' ? '' : 'none';
+                    render();
+                });
+            });
+        }
+
+        // ---------- viz 1: HG ----------
+        var hgG = document.getElementById('viz-hg-g');
+        var viewHg = makeSphereView(document.getElementById('viz-hg-sphere'));
+        function renderVizHg() {
+            var g = state.g;
+            document.getElementById('viz-hg-g-val').textContent = g.toFixed(2);
+            var f = hgFn(g), fa = axisFn(f, Z_AXIS);
+            viewHg.set(fa);
+            renderPolar(document.getElementById('viz-hg-plot'),
+                [{ fn: f, signColors: true, fill: 'rgba(220,53,69,0.08)' }]);
+        }
+        bindViz('viz-hg', renderVizHg);
+
+        // ---------- viz 2: free ZH ----------
+        var zhSliders = [0, 1, 2, 3].map(function (i) { return document.getElementById('viz-zh-c' + i); });
+        var viewZh = makeSphereView(document.getElementById('viz-zh-sphere'));
+        function renderVizZh() {
+            var c = zhSliders.map(function (s) { return parseFloat(s.value); });
+            c.forEach(function (v, i) {
+                document.getElementById('viz-zh-c' + i + '-val').textContent = v.toFixed(2);
+            });
+            var f = zhFn(c), fa = axisFn(f, Z_AXIS);
+            viewZh.set(fa);
+            renderPolar(document.getElementById('viz-zh-plot'),
+                [{ fn: f, signColors: true, fill: 'rgba(13,110,253,0.06)' }]);
+        }
+        zhSliders.forEach(function (s) { s.addEventListener('input', renderVizZh); });
+        bindViz('viz-zh', renderVizZh);
+
+        // ---------- viz 3: ZH with HG coefficients vs exact HG ----------
+        var zhhgG = document.getElementById('viz-zhhg-g');
+        var viewZhHgZh = makeSphereView(document.getElementById('viz-zhhg-sphere-zh'));
+        var viewZhHgHg = makeSphereView(document.getElementById('viz-zhhg-sphere-hg'));
+        function syncCamera(src, dst) {
+            src.controls.addEventListener('change', function () {
+                dst.camera.position.copy(src.camera.position);
+                dst.camera.quaternion.copy(src.camera.quaternion);
+                dst.render();
+            });
+        }
+        syncCamera(viewZhHgZh, viewZhHgHg);
+        syncCamera(viewZhHgHg, viewZhHgZh);
+        function renderVizZhHg() {
+            var g = state.g;
+            document.getElementById('viz-zhhg-g-val').textContent = g.toFixed(2);
+            var c = hgZhCoeffs(g, 4);
+            document.getElementById('viz-zhhg-coeffs').textContent =
+                '(1, ' + c[1].toFixed(2) + ', ' + c[2].toFixed(2) + ', ' + c[3].toFixed(2) + ')';
+            var fz = zhFn(c), fh = hgFn(g);
+            var faz = axisFn(fz, Z_AXIS), fah = axisFn(fh, Z_AXIS);
+            viewZhHgZh.set(faz);
+            viewZhHgHg.set(fah);
+            renderPolar(document.getElementById('viz-zhhg-plot'), [
+                { fn: fh, color: '#212529', dash: [6, 4] },
+                { fn: fz, color: '#dc3545', fill: 'rgba(220,53,69,0.08)' }
+            ]);
+        }
+        bindViz('viz-zhhg', renderVizZhHg);
+
+        // ---------- viz 4: rotated ZH ----------
+        var rotG = document.getElementById('viz-rot-g');
+        var rotTheta = document.getElementById('viz-rot-theta');
+        var rotPhi = document.getElementById('viz-rot-phi');
+        var viewRot = makeSphereView(document.getElementById('viz-rot-sphere'));
+        function renderVizRot() {
+            var g = state.g, thDeg = state.theta, phDeg = state.phi;
+            document.getElementById('viz-rot-g-val').textContent = g.toFixed(2);
+            document.getElementById('viz-rot-theta-val').textContent = thDeg.toFixed(0) + '°';
+            document.getElementById('viz-rot-phi-val').textContent = phDeg.toFixed(0) + '°';
+            var th = thDeg * Math.PI / 180, ph = phDeg * Math.PI / 180;
+            var dir = [Math.sin(th) * Math.cos(ph), Math.sin(th) * Math.sin(ph), Math.cos(th)];
+            var f = zhFn(hgZhCoeffs(g, 4)), fa = axisFn(f, dir);
+            viewRot.set(fa);
+            viewRot.setArrow(dir);
+            renderPolar(document.getElementById('viz-rot-plot'),
+                [{ fn: f, signColors: true, fill: 'rgba(220,53,69,0.08)' }]);
+        }
+        rotTheta.addEventListener('input', function () {
+            state.theta = parseFloat(rotTheta.value);
+            renderVizRot();
+        });
+        rotPhi.addEventListener('input', function () {
+            state.phi = parseFloat(rotPhi.value);
+            renderVizRot();
+        });
+        bindViz('viz-rot', renderVizRot);
+
+        // ---------- shared g ----------
+        var gSliders = [hgG, zhhgG, rotG];
+        function renderAll() {
+            renderVizHg();
+            renderVizZh();
+            renderVizZhHg();
+            renderVizRot();
+        }
+        function setG(g, source) {
+            state.g = g;
+            gSliders.forEach(function (s) { if (s !== source) s.value = g; });
+            var c = hgZhCoeffs(g, 4);
+            zhSliders.forEach(function (s, i) { s.value = c[i]; });
+            renderAll();
+        }
+        gSliders.forEach(function (s) {
+            s.addEventListener('input', function () { setG(parseFloat(s.value), s); });
+        });
+
+        // ---------- shared scale cap ----------
+        var capSlider = document.getElementById('value-cap');
+        capSlider.addEventListener('input', function () {
+            VALUE_CAP = parseFloat(capSlider.value);
+            document.getElementById('value-cap-val').textContent =
+                VALUE_CAP < 1 ? VALUE_CAP.toFixed(2) : VALUE_CAP.toFixed(1);
+            renderAll();
+        });
+
+        // ---------- SH bands figure ----------
+        document.querySelectorAll('canvas.sh-band').forEach(function (cv) {
+            var l = parseInt(cv.dataset.l, 10), m = parseInt(cv.dataset.m, 10);
+            renderSphere(cv, function (d) { return realSH(l, m, d); });
+        });
+
+        // ---------- initial render ----------
+        renderAll();
+    </script>
+</body>
+
+</html>
