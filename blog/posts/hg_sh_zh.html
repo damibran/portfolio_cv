@@ -75,19 +75,10 @@
                 <div class="col-lg-8">
 
                     <h2 class="text-secondary mb-3">1. Introduction</h2>
-                    <p>This post was prompted by a practical problem. While working on volumetric rendering I wanted a
-                        cheap way to light participating media with environment lighting stored as spherical harmonics
-                        (SH). Two well-known facts collided in my head:</p>
-                    <ul>
-                        <li>SH is a famously convenient approximation of an irradiance map — Ramamoorthi and Hanrahan
-                            showed that diffuse irradiance of any environment map is captured almost entirely by just 9
-                            SH coefficients (bands 0–2).</li>
-                        <li>The Henyey-Greenstein (HG) function is <em>the</em> phase function used in volumetric
-                            rendering to describe anisotropic scattering.</li>
-                    </ul>
-                    <p>So the question is: can we represent the HG lobe itself in SH, and then light a volume with a
-                        couple of dot products instead of any integration? Spoiler: yes, and the key insight is that HG
-                        is a <em>zonal harmonic</em> with beautifully simple coefficients.</p>
+                    <p>Когда я работал над volumetric rendering я столкнулся с проблемой интеграции существующей системы 
+                        global illumination, которая аппроксимировалась при помощи сферических гармоник. Поиск информации по данной
+                        теме вывел меня на [XXX]. 
+                    </p>
                     <p class="text-muted"><small>Every interactive figure below can be switched between a 3D sphere
                             view — drag to orbit, scroll to zoom, colored lines are the \(x\) (red), \(y\) (green),
                             \(z\) (blue) axes — and a polar plot of the underlying Legendre-polynomial expansion. All
@@ -153,51 +144,51 @@
                                 <div class="col-auto">
                                     <canvas class="sh-band rounded border" data-l="0" data-m="0" width="110"
                                         height="110"></canvas>
-                                    <div class="small text-muted">\(Y_0^0\)</div>
+                                    <div class="small text-muted">\(Y_0^0=\frac{1}{2 \sqrt{\pi}}\)</div>
                                 </div>
                             </div>
                             <div class="row justify-content-center mb-1">
                                 <div class="col-auto">
                                     <canvas class="sh-band rounded border" data-l="1" data-m="-1" width="110"
                                         height="110"></canvas>
-                                    <div class="small text-muted">\(Y_1^{-1}\)</div>
+                                    <div class="small text-muted">\(Y_1^{-1}=-\frac{\sqrt{3}y}{2 \sqrt{\pi}}\)</div>
                                 </div>
                                 <div class="col-auto">
                                     <canvas class="sh-band rounded border" data-l="1" data-m="0" width="110"
                                         height="110"></canvas>
-                                    <div class="small text-muted">\(Y_1^{0}\)</div>
+                                    <div class="small text-muted">\(Y_1^{0}=\frac{\sqrt{3}z}{2 \sqrt{\pi}}\)</div>
                                 </div>
                                 <div class="col-auto">
                                     <canvas class="sh-band rounded border" data-l="1" data-m="1" width="110"
                                         height="110"></canvas>
-                                    <div class="small text-muted">\(Y_1^{1}\)</div>
+                                    <div class="small text-muted">\(Y_1^{1}=-\frac{\sqrt{3}x}{2 \sqrt{\pi}}\)</div>
                                 </div>
                             </div>
                             <div class="row justify-content-center mb-1">
                                 <div class="col-auto">
                                     <canvas class="sh-band rounded border" data-l="2" data-m="-2" width="110"
                                         height="110"></canvas>
-                                    <div class="small text-muted">\(Y_2^{-2}\)</div>
+                                    <div class="small text-muted">\(Y_2^{-2}=\frac{\sqrt{15}yx}{2 \sqrt{\pi}}\)</div>
                                 </div>
                                 <div class="col-auto">
                                     <canvas class="sh-band rounded border" data-l="2" data-m="-1" width="110"
                                         height="110"></canvas>
-                                    <div class="small text-muted">\(Y_2^{-1}\)</div>
+                                    <div class="small text-muted">\(Y_2^{-1}=-\frac{\sqrt{15}yz}{2 \sqrt{\pi}}\)</div>
                                 </div>
                                 <div class="col-auto">
                                     <canvas class="sh-band rounded border" data-l="2" data-m="0" width="110"
                                         height="110"></canvas>
-                                    <div class="small text-muted">\(Y_2^{0}\)</div>
+                                    <div class="small text-muted">\(Y_2^{0}=\frac{\sqrt{5}(3 z^2-1)}{4 \sqrt{\pi}}\)</div>
                                 </div>
                                 <div class="col-auto">
                                     <canvas class="sh-band rounded border" data-l="2" data-m="1" width="110"
                                         height="110"></canvas>
-                                    <div class="small text-muted">\(Y_2^{1}\)</div>
+                                    <div class="small text-muted">\(Y_2^{1}=-\frac{\sqrt{15}xz}{2 \sqrt{\pi}}\)</div>
                                 </div>
                                 <div class="col-auto">
                                     <canvas class="sh-band rounded border" data-l="2" data-m="2" width="110"
                                         height="110"></canvas>
-                                    <div class="small text-muted">\(Y_2^{2}\)</div>
+                                    <div class="small text-muted">\(Y_2^{2}=\frac{\sqrt{15}(x^2-y^2)}{4 \sqrt{\pi}}\)</div>
                                 </div>
                             </div>
                             <p class="text-muted small mb-0 mt-2">Real-valued SH basis functions, bands \(l = 0, 1,
